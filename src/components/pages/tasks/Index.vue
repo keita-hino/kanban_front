@@ -89,40 +89,7 @@
   export default {
     data: function () {
       return {
-        tasks: [
-          {
-            id: 1,
-            name: 'タスク管理用のコンポーネント追加',
-            status: 'unstarted',
-            start_date: '2020/03/01',
-            due_date: '2020/03/20',
-            display_order: 1,
-          },
-          {
-            id: 2,
-            name: 'デザインの修正',
-            status: 'unstarted',
-            start_date: '2020/03/02',
-            due_date: '2020/03/21',
-            display_order: 2
-          },
-          {
-            id: 3,
-            name: 'vue-router導入',
-            status: 'in_progress',
-            start_date: '2020/03/03',
-            due_date: '2020/03/22',
-            display_order: 1
-          },
-          {
-            id: 4,
-            name: 'vuetify導入',
-            status: 'done',
-            start_date: '2020/03/04',
-            due_date: '2020/03/23',
-            display_order: 1
-          }
-        ]
+        tasks: []
       }
     },
 
@@ -131,38 +98,20 @@
     },
 
     methods: {
-      // 登録されているユーザを取得する
-      getUsers: function(){
-        axios.get(`${process.env.VUE_APP_API_BASE_URL}/users`)
+      // 登録されているタスクを取得する
+      getTasks() {
+        axios.get(`${process.env.VUE_APP_API_BASE_URL}/tasks`)
           .then(response => {
-            this.users = response.data.users
+            this.tasks = response.data.tasks
           });
       },
     },
 
     mounted: function(){
-      // this.getUsers();
+      this.getTasks();
     },
 
     computed: {
     }
   }
 </script>
-
-<style>
-.material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -moz-font-feature-settings: 'liga';
-  -moz-osx-font-smoothing: grayscale;
-}
-</style>
