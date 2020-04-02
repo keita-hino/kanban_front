@@ -1,5 +1,6 @@
 <template>
   <v-app id="inspire">
+    <Header/>
     <div class="container">
       <router-view/>
     </div>
@@ -7,11 +8,14 @@
 </template>
 
 <script>
+  import Header from './components/layouts/Header'
   export default {
     data: function () {
       return {
-        message: "vue.js動いたぞ"
       }
+    },
+    components: {
+      Header
     },
 
   }
