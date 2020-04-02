@@ -5,7 +5,7 @@
         class="lighten-4"
         justify="center" align-content="start"
       >
-        <div id="top" class='headline font-italic font-weight-light mt-8 mb-7'>カンバンボード</div>
+        <div id="top" class='headline font-italic font-weight-light mt-2 mb-7'>カンバンボード</div>
       </v-row>
 
       <div class='d-flex'>
@@ -25,8 +25,7 @@
                   <p class="subtitle-2 text--primary">
                     {{ task.name }}
                   </p>
-                  <span>期限：{{ task.due_date }}</span>
-                  <i class="material-icons">delete</i>
+                  <span>Due {{ task.due_date }}</span>
                 </v-card-text>
               </v-card>
             </draggable>
@@ -48,7 +47,7 @@
                   <p class="subtitle-2 text--primary">
                     {{ task.name }}
                   </p>
-                  <span class="overline">期限：{{ task.due_date }}</span>
+                  <span>Due {{ task.due_date }}</span>
                 </v-card-text>
               </v-card>
             </draggable>
@@ -70,7 +69,7 @@
                   <p class="subtitle-2 text--primary">
                     {{ task.name }}
                   </p>
-                  <span>期限：{{ task.due_date }}</span>
+                  <span>Due {{ task.due_date }}</span>
                 </v-card-text>
               </v-card>
             </draggable>
@@ -149,3 +148,21 @@
     }
   }
 </script>
+
+<style>
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -moz-font-feature-settings: 'liga';
+  -moz-osx-font-smoothing: grayscale;
+}
+</style>
