@@ -89,16 +89,7 @@
   export default {
     data: function () {
       return {
-        tasks: [
-          // {
-          //   id: 1,
-          //   name: 'タスク管理用のコンポーネント追加',
-          //   status: 'unstarted',
-          //   start_date: '2020/03/01',
-          //   due_date: '2020/03/20',
-          //   display_order: 1,
-          // },
-        ]
+        tasks: []
       }
     },
 
