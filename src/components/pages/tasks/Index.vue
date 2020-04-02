@@ -1,12 +1,7 @@
 <template>
   <v-content>
     <v-container>
-      <v-data-table
-        :headers="headers"
-        :items="users"
-        :items-per-page="5"
-        class="elevation-1"
-      ></v-data-table>
+
     </v-container>
   </v-content>
 </template>
@@ -18,12 +13,28 @@
   export default {
     data: function () {
       return {
-      headers: [
-        { text: 'ID', value: 'id' },
-        { text: 'Name', value: 'name' },
-        { text: 'Age', value: 'age' }
-      ],
-        users: []
+        tasks: [
+          {
+            name: 'タスク管理用のコンポーネント追加',
+            status: 'unstarted',
+            start_date: '2020/03/01'
+          },
+          {
+            name: 'デザインの修正',
+            status: 'unstarted',
+            start_date: '2020/03/02'
+          },
+          {
+            name: 'vue-router導入',
+            status: 'in_progress',
+            start_date: '2020/03/03'
+          },
+          {
+            name: 'vuetify導入',
+            status: 'done',
+            start_date: '2020/03/04'
+          }
+        ]
       }
     },
 
@@ -38,7 +49,7 @@
     },
 
     mounted: function(){
-      this.getUsers();
+      // this.getUsers();
     },
 
     computed: {
