@@ -30,7 +30,7 @@
     methods: {
       // 登録されているユーザを取得する
       getUsers: function(){
-        axios.get('http://localhost:3000/api/v1/users')
+        axios.get('https://kanban-back.herokuapp.com/api/v1/users')
           .then(response => {
             this.users = response.data.users
           });
