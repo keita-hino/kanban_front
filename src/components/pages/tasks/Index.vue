@@ -1,33 +1,6 @@
 <template>
   <v-content>
     <v-container>
-
-    <!-- <draggable tag="ul">
-      <li v-for="(task) in tasks" :key="task.id">{{task.name}}</li>
-    </draggable> -->
-
-      <!-- <draggable tag="div"
-        class="mx-auto v-card v-sheet theme--light"
-        style="width: 344px;"
-        width="344"
-      >
-        <v-card-text>
-          <div>#19</div>
-          <p class="display-1 text--primary">
-            デザインの修正
-          </p>
-          <p>期限：2020/03/20</p>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn
-            text
-            color="deep-purple accent-4"
-          >
-            Show Detail
-          </v-btn>
-        </v-card-actions>
-        <li v-for="(task) in tasks" :key="task.id">{{task.name}}</li>
-      </draggable> -->
       <v-row
         class="lighten-4"
         justify="center" align-content="start"
@@ -53,6 +26,7 @@
                     {{ task.name }}
                   </p>
                   <span>期限：{{ task.due_date }}</span>
+                  <i class="material-icons">delete</i>
                 </v-card-text>
               </v-card>
             </draggable>
@@ -102,7 +76,6 @@
             </draggable>
           </v-layout>
         </v-card>
-
       </div>
 
     </v-container>
