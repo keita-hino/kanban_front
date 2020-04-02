@@ -32,7 +32,7 @@
         class="lighten-4"
         justify="center" align-content="start"
       >
-        <div id="top" class='headline font-italic font-weight-light mt-3 mb-8'>カンバンボード</div>
+        <div id="top" class='headline font-italic font-weight-light mt-8 mb-7'>カンバンボード</div>
       </v-row>
 
       <div class='d-flex'>
@@ -52,7 +52,7 @@
                   <p class="subtitle-2 text--primary">
                     {{ task.name }}
                   </p>
-                  <p>期限：{{ task.due_date }}</p>
+                  <span>期限：{{ task.due_date }}</span>
                 </v-card-text>
               </v-card>
             </draggable>
@@ -74,7 +74,7 @@
                   <p class="subtitle-2 text--primary">
                     {{ task.name }}
                   </p>
-                  <p>期限：{{ task.due_date }}</p>
+                  <span class="overline">期限：{{ task.due_date }}</span>
                 </v-card-text>
               </v-card>
             </draggable>
@@ -96,7 +96,7 @@
                   <p class="subtitle-2 text--primary">
                     {{ task.name }}
                   </p>
-                  <p>期限：{{ task.due_date }}</p>
+                  <span>期限：{{ task.due_date }}</span>
                 </v-card-text>
               </v-card>
             </draggable>
