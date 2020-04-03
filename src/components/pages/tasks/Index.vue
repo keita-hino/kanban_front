@@ -47,7 +47,8 @@
               tag="div"
               group="myGroup"
               :options="options"
-              data-column-status="2"
+              @update="onUpdateTaskStatus"
+              data-column-status="in_progress"
             >
               <v-card
                 v-for="(task) in inProgressTasks" :key="task.id"
@@ -70,7 +71,13 @@
         <v-card color="grey lighten-4 mr-5 pr-6 pl-6 pb-4" min-height="800">
           <v-layout row wrap>
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">完了</v-card-subtitle>
-            <draggable v-model="doneTasks" tag="div" group="myGroup" :options="options">
+            <draggable
+              tag="div"
+              group="myGroup"
+              :options="options"
+              @update="onUpdateTaskStatus"
+              data-column-status="done"
+            >
               <v-card
                 v-for="(task) in doneTasks" :key="task.id"
                 class="mt-2"
