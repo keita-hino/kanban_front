@@ -16,7 +16,7 @@
             <!-- 1列目 -->
             <draggable tag="div">
               <v-card
-                v-for="(task) in tasks" :key="task.id"
+                v-for="(task) in unstartedTasks" :key="task.id"
                 class="mt-2"
                 width="330"
               >
@@ -38,7 +38,7 @@
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">着手中</v-card-subtitle>
             <draggable tag="div">
               <v-card
-                v-for="(task) in tasks" :key="task.id"
+                v-for="(task) in inProgressTasks" :key="task.id"
                 class="mt-2"
                 width="330"
               >
@@ -60,7 +60,7 @@
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">完了</v-card-subtitle>
             <draggable tag="div">
               <v-card
-                v-for="(task) in tasks" :key="task.id"
+                v-for="(task) in doneTasks" :key="task.id"
                 class="mt-2"
                 width="330"
               >
@@ -112,7 +112,20 @@
     },
 
     computed: {
+      // 未着手のタスク取得
+      unstartedTasks(){
+        return this.tasks.filter( task => task.status == 'unstarted' )
+      },
 
+      // 着手中のタスク取得
+      inProgressTasks(){
+        return this.tasks.filter( task => task.status == 'in_progress' )
+      },
+
+      // 完了のタスク取得
+      doneTasks(){
+        return this.tasks.filter( task => task.status == 'done' )
+      }
     }
   }
 </script>
