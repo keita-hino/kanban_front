@@ -14,9 +14,16 @@
           <v-layout row wrap>
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">未着手</v-card-subtitle>
             <!-- 1列目 -->
-            <draggable tag="div">
+            <draggable
+              group="myGroup"
+              tag="div"
+              :options="options"
+              @update="onUpdateTaskStatus"
+              @end="drag=draggableEnd"
+              data-column-status="unstarted"
+            >
               <v-card
-                v-for="(task) in tasks" :key="task.id"
+                v-for="(task) in unstartedTasks" :key="task.id"
                 class="mt-2"
                 width="330"
               >
@@ -36,9 +43,15 @@
         <v-card color="grey lighten-4 mr-5 pr-5 pl-6 pb-4" min-height="800">
           <v-layout row wrap>
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">着手中</v-card-subtitle>
-            <draggable tag="div">
+            <draggable
+              tag="div"
+              group="myGroup"
+              :options="options"
+              @update="onUpdateTaskStatus"
+              data-column-status="in_progress"
+            >
               <v-card
-                v-for="(task) in tasks" :key="task.id"
+                v-for="(task) in inProgressTasks" :key="task.id"
                 class="mt-2"
                 width="330"
               >
@@ -58,9 +71,15 @@
         <v-card color="grey lighten-4 mr-5 pr-6 pl-6 pb-4" min-height="800">
           <v-layout row wrap>
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">完了</v-card-subtitle>
-            <draggable tag="div">
+            <draggable
+              tag="div"
+              group="myGroup"
+              :options="options"
+              @update="onUpdateTaskStatus"
+              data-column-status="done"
+            >
               <v-card
-                v-for="(task) in tasks" :key="task.id"
+                v-for="(task) in doneTasks" :key="task.id"
                 class="mt-2"
                 width="330"
               >
@@ -87,8 +106,12 @@
   import draggable from 'vuedraggable'
 
   export default {
-    data: function () {
+    data() {
       return {
+        options: {
+          group: "myGroup",
+          animation: 200
+        },
         tasks: []
       }
     },
@@ -105,13 +128,57 @@
             this.tasks = response.data.tasks
           });
       },
+
+      // 縦に移動した時に発火
+      onUpdateTaskStatus(event){
+        // TODO:下記のリファクタリング
+        const status = event.from.getAttribute('data-column-status')
+        let filteredTasks = this.tasks.filter( task => task.status == status )
+        let movedTask = filteredTasks.find( (task,index) => index == event.oldIndex )
+        let oldTask = filteredTasks.find( (task,index) => index == event.newIndex )
+        const oldIndex = oldTask.display_order
+        const movedIndex = movedTask.display_order
+        movedTask.display_order = oldIndex
+        oldTask.display_order = movedIndex
+        let updatedTasks = []
+        updatedTasks.push(movedTask)
+        updatedTasks.push(oldTask)
+
+        // タスクの並び更新処理
+        axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks/moved_tasks`, {
+          tasks: updatedTasks
+        })
+        .then( response => {
+          this.tasks = response.data.tasks
+        });
+      },
+
+      // 横に移動した時に発火
+      draggableEnd(event) {
+        console.log(event.from)
+        console.log(event.to)
+      }
     },
 
-    mounted: function(){
+    mounted(){
       this.getTasks();
     },
 
     computed: {
+      // 未着手のタスク取得
+      unstartedTasks(){
+        return this.tasks.filter( task => task.status == 'unstarted' )
+      },
+
+      // 着手中のタスク取得
+      inProgressTasks(){
+        return this.tasks.filter( task => task.status == 'in_progress' )
+      },
+
+      // 完了のタスク取得
+      doneTasks(){
+        return this.tasks.filter( task => task.status == 'done' )
+      }
     }
   }
 </script>
