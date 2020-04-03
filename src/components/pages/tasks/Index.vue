@@ -134,21 +134,22 @@
       // 縦に移動した時に発火
       onUpdateTaskStatus(event){
         // TODO:下記のリファクタリング
+        // 該当のレーン情のタスク取得
         const status = event.from.getAttribute('data-column-status')
         let filteredTasks = this.tasks.filter( task => task.status == status )
+
+        // 移動するタスク取得
         let movedTask = filteredTasks.find( (task,index) => index == event.oldIndex )
+
+        // 挿入した位置の直下にあるタスク取得
         let oldTask = filteredTasks.find( (task,index) => index == event.newIndex )
-        const oldIndex = oldTask.display_order
-        const movedIndex = movedTask.display_order
-        movedTask.display_order = oldIndex
-        oldTask.display_order = movedIndex
-        let updatedTasks = []
-        updatedTasks.push(movedTask)
-        updatedTasks.push(oldTask)
+
+        // 挿入先のdisplay_order設定
+        movedTask.display_order = oldTask.display_order
 
         // タスクの並び更新処理
-        axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks/moved_tasks`, {
-          tasks: updatedTasks
+        axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks/update_status_task`, {
+          task: movedTask
         })
         .then( response => {
           this.tasks = response.data.tasks
