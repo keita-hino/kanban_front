@@ -19,7 +19,7 @@
               tag="div"
               :options="options"
               @update="onUpdateTaskStatus"
-              @end="drag=draggableEnd"
+              @end="draggableEnd"
               data-column-status="unstarted"
             >
               <v-card
@@ -48,6 +48,7 @@
               group="myGroup"
               :options="options"
               @update="onUpdateTaskStatus"
+              @end="draggableEnd"
               data-column-status="in_progress"
             >
               <v-card
@@ -75,6 +76,7 @@
               tag="div"
               group="myGroup"
               :options="options"
+              @end="draggableEnd"
               @update="onUpdateTaskStatus"
               data-column-status="done"
             >
@@ -155,8 +157,29 @@
 
       // 横に移動した時に発火
       draggableEnd(event) {
-        console.log(event.from)
-        console.log(event.to)
+        if(event.from.getAttribute('data-column-status') == event.to.getAttribute('data-column-status')){
+          return 0
+        }
+        // TODO:ロジックのリファクタリング
+        let status = event.from.getAttribute('data-column-status')
+        let filteredTasks = this.tasks.filter( task => task.status == status )
+        let findedTask = filteredTasks.find( (task, index) => index == event.oldIndex )
+        findedTask.status = event.to.getAttribute('data-column-status')
+
+        // 挿入した位置の直下にあるタスクのdisplay_order取得
+        let oldStatus = event.to.getAttribute('data-column-status')
+        let findOldTasks = this.tasks.filter( task => task.status == oldStatus )
+        findedTask.display_order = findOldTasks.find( (task, index) => index == event.newIndex ).display_order
+
+        // タスクの並び更新処理
+        axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks/update_status_task`, {
+          task: findedTask
+        })
+        .then( response => {
+          this.tasks = response.data.tasks
+        });
+
+
       }
     },
 
