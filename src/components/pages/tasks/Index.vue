@@ -87,7 +87,7 @@
   import draggable from 'vuedraggable'
 
   export default {
-    data: function () {
+    data() {
       return {
         tasks: []
       }
@@ -107,11 +107,12 @@
       },
     },
 
-    mounted: function(){
+    mounted(){
       this.getTasks();
     },
 
     computed: {
+
     }
   }
 </script>
