@@ -148,8 +148,9 @@
         movedTask.display_order = oldTask.display_order
 
         // タスクの並び更新処理
-        axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks/update_status_task`, {
-          task: movedTask
+        axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks/moved_tasks`, {
+          task: movedTask,
+          old_display_order: movedTask.display_order
         })
         .then( response => {
           this.tasks = response.data.tasks
