@@ -10,7 +10,7 @@
 
       <div class='d-flex'>
         <!-- TODO:列も動的に増やせるように -->
-        <v-card color="grey lighten-4 mr-5 pr-5 pl-7 pb-4" min-height="800">
+        <v-card color="grey lighten-4 mr-5 pr-5 pl-7 pb-4" width="420" min-height="800">
           <v-layout row wrap>
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">未着手</v-card-subtitle>
             <!-- 1列目 -->
@@ -40,7 +40,7 @@
         </v-card>
 
         <!-- 2列目 -->
-        <v-card color="grey lighten-4 mr-5 pr-5 pl-6 pb-4" min-height="800">
+        <v-card color="grey lighten-4 mr-5 pr-5 pl-6 pb-4" width="420" min-height="800">
           <v-layout row wrap>
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">着手中</v-card-subtitle>
             <draggable
@@ -69,7 +69,7 @@
         </v-card>
 
         <!-- 3列目 -->
-        <v-card color="grey lighten-4 mr-5 pr-6 pl-6 pb-4" min-height="800">
+        <v-card color="grey lighten-4 mr-5 pr-6 pl-6 pb-4" width="420" min-height="800">
           <v-layout row wrap>
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">完了</v-card-subtitle>
             <draggable
