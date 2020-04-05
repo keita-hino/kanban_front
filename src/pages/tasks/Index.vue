@@ -10,9 +10,20 @@
 
       <div class='d-flex'>
         <!-- TODO:列も動的に増やせるように -->
-        <v-card color="grey lighten-4 mr-5 pr-5 pl-7 pb-4" min-height="800">
+        <v-card color="grey lighten-4 mr-5 pr-5 pl-7 pb-4" width="420" min-height="800">
           <v-layout row wrap>
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">未着手</v-card-subtitle>
+            <!-- タスク追加用カード -->
+            <v-card
+                class="mt-2"
+                width="330"
+              >
+              <v-card-text @click="onDetailModalOpen('unstarted')" class="text-center" style="cursor: pointer">
+                <v-icon class="mr-1 mb-1" color="blue lighten-2" size=15>add</v-icon>
+                <span class="blue--text lighten-2--text subheading mr-2">タスク追加</span>
+              </v-card-text>
+            </v-card>
+
             <!-- 1列目 -->
             <draggable
               group="myGroup"
@@ -40,9 +51,20 @@
         </v-card>
 
         <!-- 2列目 -->
-        <v-card color="grey lighten-4 mr-5 pr-5 pl-6 pb-4" min-height="800">
+        <v-card color="grey lighten-4 mr-5 pr-5 pl-6 pb-4" width="420" min-height="800">
           <v-layout row wrap>
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">着手中</v-card-subtitle>
+            <!-- タスク追加用カード -->
+            <v-card
+                class="mt-2"
+                width="330"
+              >
+              <v-card-text @click="onDetailModalOpen('in_progress')" class="text-center" style="cursor: pointer">
+                <v-icon class="mr-1 mb-1" color="blue lighten-2" size=15>add</v-icon>
+                <span class="blue--text lighten-2--text subheading mr-2">タスク追加</span>
+              </v-card-text>
+            </v-card>
+
             <draggable
               tag="div"
               group="myGroup"
@@ -69,9 +91,21 @@
         </v-card>
 
         <!-- 3列目 -->
-        <v-card color="grey lighten-4 mr-5 pr-6 pl-6 pb-4" min-height="800">
+        <v-card color="grey lighten-4 mr-5 pr-6 pl-6 pb-4" width="420" min-height="800">
           <v-layout row wrap>
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">完了</v-card-subtitle>
+
+            <!-- タスク追加用カード -->
+            <v-card
+                class="mt-2"
+                width="330"
+              >
+              <v-card-text @click="onDetailModalOpen('done')" class="text-center" style="cursor: pointer">
+                <v-icon class="mr-1 mb-1" color="blue lighten-2" size=15>add</v-icon>
+                <span class="blue--text lighten-2--text subheading mr-2">タスク追加</span>
+              </v-card-text>
+            </v-card>
+
             <draggable
               tag="div"
               group="myGroup"
@@ -98,6 +132,13 @@
         </v-card>
       </div>
 
+      <TaskDetailModal
+        @on-click-task-detail-cancel="onClickTaskDetailCancel"
+        @on-click-task-detail-save="onClickTaskDetailSave"
+        :is-task-detail-modal-show.sync="is_task_detail_modal_show"
+        :task-status="task_status"
+      />
+
     </v-container>
   </v-content>
 </template>
@@ -106,20 +147,27 @@
   // Ajax通信ライブラリ
   import axios from 'axios';
   import draggable from 'vuedraggable'
+  import TaskDetailModal from '../../components/TaskDetailModal'
 
   export default {
     data() {
       return {
+        // draggabbleで使用するオプション
         options: {
           group: "myGroup",
           animation: 200
         },
-        tasks: []
+        tasks: [],
+        // タスク詳細設定用モーダルを表示するかどうか
+        is_task_detail_modal_show: false,
+        // タスク詳細設定用モーダルに渡す用のタスクステータス
+        task_status: ''
       }
     },
 
     components: {
-      draggable
+      draggable,
+      TaskDetailModal
     },
 
     methods: {
@@ -129,6 +177,28 @@
           .then(response => {
             this.tasks = response.data.tasks
           });
+      },
+
+      // タスクの詳細設定用モーダルを開く
+      onDetailModalOpen(status){
+        this.task_status = status;
+        this.is_task_detail_modal_show = true;
+      },
+
+      onClickTaskDetailCancel(){
+        this.is_task_detail_modal_show = false;
+      },
+
+      // タスク詳細設定用モーダルで保存ボタンが押された時
+      onClickTaskDetailSave(task){
+        // タスク新規作成
+        axios.post(`${process.env.VUE_APP_API_BASE_URL}/tasks`, {
+          task: task,
+        })
+        .then( response => {
+          this.is_task_detail_modal_show = false;
+          this.tasks = response.data.tasks
+        });
       },
 
       // 縦に移動した時に発火
