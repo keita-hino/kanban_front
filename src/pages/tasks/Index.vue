@@ -18,7 +18,7 @@
                 class="mt-2"
                 width="330"
               >
-              <v-card-text @click="onDetailModalOpen()" class="text-center" style="cursor: pointer">
+              <v-card-text @click="onDetailModalOpen('unstarted')" class="text-center" style="cursor: pointer">
                 <v-icon class="mr-1 mb-1" color="blue lighten-2" size=15>add</v-icon>
                 <span class="blue--text lighten-2--text subheading mr-2">タスク追加</span>
               </v-card-text>
@@ -59,7 +59,7 @@
                 class="mt-2"
                 width="330"
               >
-              <v-card-text class="text-center" style="cursor: pointer">
+              <v-card-text @click="onDetailModalOpen('in_progress')" class="text-center" style="cursor: pointer">
                 <v-icon class="mr-1 mb-1" color="blue lighten-2" size=15>add</v-icon>
                 <span class="blue--text lighten-2--text subheading mr-2">タスク追加</span>
               </v-card-text>
@@ -100,7 +100,7 @@
                 class="mt-2"
                 width="330"
               >
-              <v-card-text class="text-center" style="cursor: pointer">
+              <v-card-text @click="onDetailModalOpen('done')" class="text-center" style="cursor: pointer">
                 <v-icon class="mr-1 mb-1" color="blue lighten-2" size=15>add</v-icon>
                 <span class="blue--text lighten-2--text subheading mr-2">タスク追加</span>
               </v-card-text>
@@ -132,6 +132,25 @@
         </v-card>
       </div>
 
+      <TaskDetailModal
+        @on-click-task-detail-cancel="onClickTaskDetailCancel"
+        @on-click-task-detail-save="onClickTaskDetailSave"
+        :is-task-detail-modal-show.sync="is_task_detail_modal_show"
+        :task-status="task_status"
+      />
+
+    <!-- <IssueSetModal
+      ref="issue_set_modal"
+      @onClickSend="onAssetAndIssueSet"
+      @onClickCancel="onAssetAndIssueCancel"
+      :ep-department-id="ep_department.id"
+      :selected-asset.sync="selected_asset"
+      :selected-provisional-ep-asset="selected_provisional_asset"
+      :ep-issue-masters="ep_issue_masters"
+      :ep-assets="ep_department.ep_assets_attributes"
+      :provisional-assets="ep_department.provisional_assets_attributes"
+    /> -->
+
     </v-container>
   </v-content>
 </template>
@@ -140,20 +159,27 @@
   // Ajax通信ライブラリ
   import axios from 'axios';
   import draggable from 'vuedraggable'
+  import TaskDetailModal from '../../components/TaskDetailModal'
 
   export default {
     data() {
       return {
+        // draggabbleで使用するオプション
         options: {
           group: "myGroup",
           animation: 200
         },
-        tasks: []
+        tasks: [],
+        // タスク詳細設定用モーダルを表示するかどうか
+        is_task_detail_modal_show: false,
+        // タスク詳細設定用モーダルに渡す用のタスクステータス
+        task_status: ''
       }
     },
 
     components: {
-      draggable
+      draggable,
+      TaskDetailModal
     },
 
     methods: {
@@ -166,8 +192,25 @@
       },
 
       // タスクの詳細設定用モーダルを開く
-      onDetailModalOpen(){
-        alert('test')
+      onDetailModalOpen(status){
+        this.task_status = status;
+        this.is_task_detail_modal_show = true;
+      },
+
+      onClickTaskDetailCancel(){
+        this.is_task_detail_modal_show = false;
+      },
+
+      // タスク詳細設定用モーダルで保存ボタンが押された時
+      onClickTaskDetailSave(task){
+        // タスク新規作成
+        axios.post(`${process.env.VUE_APP_API_BASE_URL}/tasks`, {
+          task: task,
+        })
+        .then( response => {
+          this.is_task_detail_modal_show = false;
+          this.tasks = response.data.tasks
+        });
       },
 
       // 縦に移動した時に発火
