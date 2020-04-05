@@ -13,6 +13,17 @@
         <v-card color="grey lighten-4 mr-5 pr-5 pl-7 pb-4" width="420" min-height="800">
           <v-layout row wrap>
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">未着手</v-card-subtitle>
+            <!-- タスク追加用カード -->
+            <v-card
+                class="mt-2"
+                width="330"
+              >
+              <v-card-text @click="onDetailModalOpen()" class="text-center" style="cursor: pointer">
+                <v-icon class="mr-1 mb-1" color="blue lighten-2" size=15>add</v-icon>
+                <span class="blue--text lighten-2--text subheading mr-2">タスク追加</span>
+              </v-card-text>
+            </v-card>
+
             <!-- 1列目 -->
             <draggable
               group="myGroup"
@@ -43,6 +54,17 @@
         <v-card color="grey lighten-4 mr-5 pr-5 pl-6 pb-4" width="420" min-height="800">
           <v-layout row wrap>
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">着手中</v-card-subtitle>
+            <!-- タスク追加用カード -->
+            <v-card
+                class="mt-2"
+                width="330"
+              >
+              <v-card-text class="text-center" style="cursor: pointer">
+                <v-icon class="mr-1 mb-1" color="blue lighten-2" size=15>add</v-icon>
+                <span class="blue--text lighten-2--text subheading mr-2">タスク追加</span>
+              </v-card-text>
+            </v-card>
+
             <draggable
               tag="div"
               group="myGroup"
@@ -72,6 +94,18 @@
         <v-card color="grey lighten-4 mr-5 pr-6 pl-6 pb-4" width="420" min-height="800">
           <v-layout row wrap>
             <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">完了</v-card-subtitle>
+
+            <!-- タスク追加用カード -->
+            <v-card
+                class="mt-2"
+                width="330"
+              >
+              <v-card-text class="text-center" style="cursor: pointer">
+                <v-icon class="mr-1 mb-1" color="blue lighten-2" size=15>add</v-icon>
+                <span class="blue--text lighten-2--text subheading mr-2">タスク追加</span>
+              </v-card-text>
+            </v-card>
+
             <draggable
               tag="div"
               group="myGroup"
@@ -129,6 +163,11 @@
           .then(response => {
             this.tasks = response.data.tasks
           });
+      },
+
+      // タスクの詳細設定用モーダルを開く
+      onDetailModalOpen(){
+        alert('test')
       },
 
       // 縦に移動した時に発火
