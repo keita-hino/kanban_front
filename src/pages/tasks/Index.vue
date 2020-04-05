@@ -139,18 +139,6 @@
         :task-status="task_status"
       />
 
-    <!-- <IssueSetModal
-      ref="issue_set_modal"
-      @onClickSend="onAssetAndIssueSet"
-      @onClickCancel="onAssetAndIssueCancel"
-      :ep-department-id="ep_department.id"
-      :selected-asset.sync="selected_asset"
-      :selected-provisional-ep-asset="selected_provisional_asset"
-      :ep-issue-masters="ep_issue_masters"
-      :ep-assets="ep_department.ep_assets_attributes"
-      :provisional-assets="ep_department.provisional_assets_attributes"
-    /> -->
-
     </v-container>
   </v-content>
 </template>
