@@ -3,7 +3,7 @@
     <v-dialog v-model="isTaskDetailModalShow" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="headline">タスク設定</span>
+          <span class="title">タスク設定</span>
         </v-card-title>
         <v-card-text>
           <v-container>
