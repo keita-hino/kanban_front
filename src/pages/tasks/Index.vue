@@ -10,126 +10,38 @@
 
       <div class='d-flex'>
         <!-- TODO:列も動的に増やせるように -->
-        <v-card color="grey lighten-4 mr-5 pr-5 pl-7 pb-4" width="420" min-height="800">
-          <v-layout row wrap>
-            <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">未着手</v-card-subtitle>
-            <!-- タスク追加用カード -->
-            <v-card
-                class="mt-2"
-                width="330"
-              >
-              <v-card-text @click="onDetailModalOpen('unstarted')" class="text-center" style="cursor: pointer">
-                <v-icon class="mr-1 mb-1" color="blue lighten-2" size=15>add</v-icon>
-                <span class="blue--text lighten-2--text subheading mr-2">タスク追加</span>
-              </v-card-text>
-            </v-card>
+        <!-- TODO:ここもループでできるように -->
+        <!-- TODO:statusを日本語化したものをHashにしてv-forで回す -->
+        <TaskCard
+          :sub-title="'未着手'"
+          :status-key="'unstarted'"
+          :tasks="unstartedTasks"
+          @on-update-task-status="onUpdateTaskStatus"
+          @on-draggable-end="draggableEnd"
+          @on-detail-modal-open="onDetailModalOpen"
+          @create-task="createTask"
+        />
 
-            <!-- 1列目 -->
-            <draggable
-              group="myGroup"
-              tag="div"
-              :options="options"
-              @update="onUpdateTaskStatus"
-              @end="draggableEnd"
-              data-column-status="unstarted"
-            >
-              <v-card
-                v-for="(task) in unstartedTasks" :key="task.id"
-                class="mt-2"
-                width="330"
-              >
-                <v-card-text>
-                  <div>#{{task.id}}</div>
-                  <p class="subtitle-2 text--primary">
-                    {{ task.name }}
-                  </p>
-                  <span>Due {{ task.due_date }}</span>
-                </v-card-text>
-              </v-card>
-            </draggable>
-          </v-layout>
-        </v-card>
+        <TaskCard
+          :sub-title="'着手中'"
+          :status-key="'in_progress'"
+          :tasks="inProgressTasks"
+          @on-update-task-status="onUpdateTaskStatus"
+          @on-draggable-end="draggableEnd"
+          @on-detail-modal-open="onDetailModalOpen"
+          @create-task="createTask"
+        />
 
-        <!-- 2列目 -->
-        <v-card color="grey lighten-4 mr-5 pr-5 pl-6 pb-4" width="420" min-height="800">
-          <v-layout row wrap>
-            <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">着手中</v-card-subtitle>
-            <!-- タスク追加用カード -->
-            <v-card
-                class="mt-2"
-                width="330"
-              >
-              <v-card-text @click="onDetailModalOpen('in_progress')" class="text-center" style="cursor: pointer">
-                <v-icon class="mr-1 mb-1" color="blue lighten-2" size=15>add</v-icon>
-                <span class="blue--text lighten-2--text subheading mr-2">タスク追加</span>
-              </v-card-text>
-            </v-card>
+        <TaskCard
+          :sub-title="'完了'"
+          :status-key="'done'"
+          :tasks="doneTasks"
+          @on-update-task-status="onUpdateTaskStatus"
+          @on-draggable-end="draggableEnd"
+          @on-detail-modal-open="onDetailModalOpen"
+          @create-task="createTask"
+        />
 
-            <draggable
-              tag="div"
-              group="myGroup"
-              :options="options"
-              @update="onUpdateTaskStatus"
-              @end="draggableEnd"
-              data-column-status="in_progress"
-            >
-              <v-card
-                v-for="(task) in inProgressTasks" :key="task.id"
-                class="mt-2"
-                width="330"
-              >
-                <v-card-text>
-                  <div>#{{task.id}}</div>
-                  <p class="subtitle-2 text--primary">
-                    {{ task.name }}
-                  </p>
-                  <span>Due {{ task.due_date }}</span>
-                </v-card-text>
-              </v-card>
-            </draggable>
-          </v-layout>
-        </v-card>
-
-        <!-- 3列目 -->
-        <v-card color="grey lighten-4 mr-5 pr-6 pl-6 pb-4" width="420" min-height="800">
-          <v-layout row wrap>
-            <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">完了</v-card-subtitle>
-
-            <!-- タスク追加用カード -->
-            <v-card
-                class="mt-2"
-                width="330"
-              >
-              <v-card-text @click="onDetailModalOpen('done')" class="text-center" style="cursor: pointer">
-                <v-icon class="mr-1 mb-1" color="blue lighten-2" size=15>add</v-icon>
-                <span class="blue--text lighten-2--text subheading mr-2">タスク追加</span>
-              </v-card-text>
-            </v-card>
-
-            <draggable
-              tag="div"
-              group="myGroup"
-              :options="options"
-              @end="draggableEnd"
-              @update="onUpdateTaskStatus"
-              data-column-status="done"
-            >
-              <v-card
-                v-for="(task) in doneTasks" :key="task.id"
-                class="mt-2"
-                width="330"
-              >
-                <v-card-text>
-                  <div>#{{task.id}}</div>
-                  <p class="subtitle-2 text--primary">
-                    {{ task.name }}
-                  </p>
-                  <span>Due {{ task.due_date }}</span>
-                </v-card-text>
-              </v-card>
-            </draggable>
-          </v-layout>
-        </v-card>
       </div>
 
       <TaskDetailModal
@@ -137,6 +49,9 @@
         @on-click-task-detail-save="onClickTaskDetailSave"
         :is-task-detail-modal-show.sync="is_task_detail_modal_show"
         :task-status="task_status"
+        :priorities="priorities"
+        :selected-task="selectedTask"
+        :statuses="statuses"
       />
 
     </v-container>
@@ -146,27 +61,26 @@
 <script>
   // Ajax通信ライブラリ
   import axios from 'axios';
-  import draggable from 'vuedraggable'
+  import TaskCard from '../../components/TaskCard'
   import TaskDetailModal from '../../components/TaskDetailModal'
 
   export default {
     data() {
       return {
-        // draggabbleで使用するオプション
-        options: {
-          group: "myGroup",
-          animation: 200
-        },
         tasks: [],
+        priorities: [],
+        statuses: {},
         // タスク詳細設定用モーダルを表示するかどうか
         is_task_detail_modal_show: false,
+        is_task_text_hide: true,
+        selectedTask: {},
         // タスク詳細設定用モーダルに渡す用のタスクステータス
         task_status: ''
       }
     },
 
     components: {
-      draggable,
+      TaskCard,
       TaskDetailModal
     },
 
@@ -176,11 +90,26 @@
         axios.get(`${process.env.VUE_APP_API_BASE_URL}/tasks`)
           .then(response => {
             this.tasks = response.data.tasks
+            this.priorities = response.data.priorities
+            this.statuses = response.data.statuses
           });
       },
 
+      // タスクの新規作成
+      createTask(task) {
+        // タスク新規作成
+        axios.post(`${process.env.VUE_APP_API_BASE_URL}/tasks`, {
+          task: task,
+        })
+        .then( response => {
+          this.is_task_text_hide = true;
+          this.tasks = response.data.tasks
+        });
+      },
+
       // タスクの詳細設定用モーダルを開く
-      onDetailModalOpen(status){
+      onDetailModalOpen(task){
+        this.selectedTask = JSON.parse(JSON.stringify(task));
         this.task_status = status;
         this.is_task_detail_modal_show = true;
       },
@@ -191,8 +120,8 @@
 
       // タスク詳細設定用モーダルで保存ボタンが押された時
       onClickTaskDetailSave(task){
-        // タスク新規作成
-        axios.post(`${process.env.VUE_APP_API_BASE_URL}/tasks`, {
+        // タスク更新
+        axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks`, {
           task: task,
         })
         .then( response => {
@@ -202,6 +131,7 @@
       },
 
       // 縦に移動した時に発火
+      // TODO:コンポーネント側にロジックを移動してtaskを受け取るだけにする
       onUpdateTaskStatus(event){
         // TODO:下記のリファクタリング
         // 該当のレーン情のタスク取得
@@ -228,6 +158,7 @@
       },
 
       // 横に移動した時に発火
+      // TODO:コンポーネント側にロジックを移動してtaskを受け取るだけにする
       draggableEnd(event) {
         if(event.from.getAttribute('data-column-status') == event.to.getAttribute('data-column-status')){
           return 0
@@ -250,7 +181,6 @@
         .then( response => {
           this.tasks = response.data.tasks
         });
-
 
       }
     },
