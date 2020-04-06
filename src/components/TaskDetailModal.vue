@@ -3,7 +3,7 @@
     <v-dialog v-model="isTaskDetailModalShow" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="subtitle-2 font-weight-light">#{{ selectedTask.id }} 未着手</span>
+          <span class="subtitle-2 font-weight-light">#{{ selectedTask.id }} {{ statuses[selectedTask.status] }}</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -100,6 +100,10 @@
       },
       // 選択されたタスク
       selectedTask: {
+        type: Object,
+      },
+      // ステータス{key: i18n}
+      statuses: {
         type: Object,
       }
     },

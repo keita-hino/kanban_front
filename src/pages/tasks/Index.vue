@@ -51,6 +51,7 @@
         :task-status="task_status"
         :priorities="priorities"
         :selected-task="selectedTask"
+        :statuses="statuses"
       />
 
     </v-container>
@@ -67,8 +68,8 @@
     data() {
       return {
         tasks: [],
-        // task: {},
         priorities: [],
+        statuses: {},
         // タスク詳細設定用モーダルを表示するかどうか
         is_task_detail_modal_show: false,
         is_task_text_hide: true,
@@ -90,6 +91,7 @@
           .then(response => {
             this.tasks = response.data.tasks
             this.priorities = response.data.priorities
+            this.statuses = response.data.statuses
           });
       },
 
