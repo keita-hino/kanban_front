@@ -43,7 +43,7 @@
                   <p class="subtitle-2 text--primary">
                     {{ task.name }}
                   </p>
-                  <span>Due {{ task.due_date }}</span>
+                  <span v-if="!!task.due_date">Due {{ task.due_date }}</span>
                 </v-card-text>
               </v-card>
             </draggable>
@@ -83,7 +83,7 @@
                   <p class="subtitle-2 text--primary">
                     {{ task.name }}
                   </p>
-                  <span>Due {{ task.due_date }}</span>
+                  <span v-if="!!task.due_date">Due {{ task.due_date }}</span>
                 </v-card-text>
               </v-card>
             </draggable>
@@ -124,7 +124,7 @@
                   <p class="subtitle-2 text--primary">
                     {{ task.name }}
                   </p>
-                  <span>Due {{ task.due_date }}</span>
+                  <span v-if="!!task.due_date">Due {{ task.due_date }}</span>
                 </v-card-text>
               </v-card>
             </draggable>
