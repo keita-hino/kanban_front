@@ -14,15 +14,13 @@
               <v-col cols="12">
                 <v-text-field v-model="task.due_date" label="期限日"></v-text-field>
               </v-col>
-              <!-- TODO:優先度も設定できるように -->
-              <!-- <v-col cols="12" sm="6">
-                <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Age*"
-                  required
-                ></v-select>
-              </v-col> -->
-
+              <v-col cols="12" sm="6">
+                <v-select v-model="task.priority"
+                  :items="priorities"
+                  label="優先度"
+                >
+                </v-select>
+              </v-col>
             </v-row>
           </v-container>
           <small>*は必須項目です</small>
@@ -64,6 +62,10 @@
       taskStatus: {
         type: String,
       },
+      // タスクの優先度のenum
+      priorities: {
+        type: Array
+      }
     },
     data() {
       return {

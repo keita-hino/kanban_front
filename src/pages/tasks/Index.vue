@@ -137,6 +137,7 @@
         @on-click-task-detail-save="onClickTaskDetailSave"
         :is-task-detail-modal-show.sync="is_task_detail_modal_show"
         :task-status="task_status"
+        :priorities="priorities"
       />
 
     </v-container>
@@ -158,6 +159,7 @@
           animation: 200
         },
         tasks: [],
+        priorities: [],
         // タスク詳細設定用モーダルを表示するかどうか
         is_task_detail_modal_show: false,
         // タスク詳細設定用モーダルに渡す用のタスクステータス
@@ -176,6 +178,7 @@
         axios.get(`${process.env.VUE_APP_API_BASE_URL}/tasks`)
           .then(response => {
             this.tasks = response.data.tasks
+            this.priorities = response.data.priorities
           });
       },
 
