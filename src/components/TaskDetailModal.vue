@@ -9,13 +9,13 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field v-model="task.name" label="タスク名*" required></v-text-field>
+                <v-text-field v-model="selectedTask.name" label="タスク名*" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field v-model="task.due_date" label="期限日"></v-text-field>
+                <v-text-field v-model="selectedTask.due_date" label="期限日"></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-select v-model="task.priority"
+                <v-select v-model="selectedTask.priority"
                   :items="priorities"
                   label="優先度"
                 >
@@ -23,7 +23,7 @@
               </v-col>
               <v-col cols="12">
                 <v-textarea
-                  v-model="task.detail"
+                  v-model="selectedTask.detail"
                   label="詳細"
                   rows="1"
                 ></v-textarea>
@@ -72,6 +72,10 @@
       // タスクの優先度のenum
       priorities: {
         type: Array
+      },
+      // 選択されたタスク
+      selectedTask: {
+        type: Object,
       }
     },
     data() {
@@ -84,7 +88,7 @@
       // 登録されているタスクを取得する
       onClickSave() {
         this.task.status = this.taskStatus;
-        this.$emit('on-click-task-detail-save', this.task);
+        this.$emit('on-click-task-detail-save', this.selectedTask);
       },
     }
   }
