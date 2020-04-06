@@ -11,9 +11,33 @@
               <v-col cols="12">
                 <v-text-field v-model="selectedTask.name" label="タスク名*" required></v-text-field>
               </v-col>
+
               <v-col cols="12">
-                <v-text-field v-model="selectedTask.due_date" label="期限日"></v-text-field>
+                <v-menu
+                  v-model="menu2"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="selectedTask.due_date"
+                      label="期限日"
+                      readonly
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="selectedTask.due_date"
+                    no-title
+                    @input="menu2 = false"
+                  >
+                  </v-date-picker>
+                </v-menu>
               </v-col>
+
               <v-col cols="12">
                 <v-select v-model="selectedTask.priority"
                   :items="priorities"
@@ -21,6 +45,7 @@
                 >
                 </v-select>
               </v-col>
+
               <v-col cols="12">
                 <v-textarea
                   v-model="selectedTask.detail"
@@ -80,7 +105,8 @@
     },
     data() {
       return {
-        task: {}
+        task: {},
+        menu2: false,
       }
     },
 

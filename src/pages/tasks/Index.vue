@@ -11,6 +11,7 @@
       <div class='d-flex'>
         <!-- TODO:列も動的に増やせるように -->
         <!-- TODO:ここもループでできるように -->
+        <!-- TODO:statusを日本語化したものをHashにしてv-forで回す -->
         <TaskCard
           :sub-title="'未着手'"
           :status-key="'unstarted'"
