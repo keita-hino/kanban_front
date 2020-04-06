@@ -14,12 +14,19 @@
               <v-col cols="12">
                 <v-text-field v-model="task.due_date" label="期限日"></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6">
+              <v-col cols="12">
                 <v-select v-model="task.priority"
                   :items="priorities"
                   label="優先度"
                 >
                 </v-select>
+              </v-col>
+              <v-col cols="12">
+                <v-textarea
+                  v-model="task.detail"
+                  label="詳細"
+                  rows="1"
+                ></v-textarea>
               </v-col>
             </v-row>
           </v-container>
