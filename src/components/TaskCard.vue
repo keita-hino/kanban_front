@@ -24,6 +24,9 @@
               v-model="task.name"
               label="タスク名"
               outlined
+              :counter="50"
+              :rules="nameRules"
+              required
               Flat
               dense
             ></v-text-field>
@@ -33,11 +36,11 @@
             <v-spacer></v-spacer>
 
             <div class="my-2 pr-3">
-              <v-btn small @click="is_task_text_hide = true">キャンセル</v-btn>
+              <v-btn small @click="onClickCreateCansel">キャンセル</v-btn>
             </div>
 
             <div class="my-2 pr-2">
-              <v-btn small @click="createTask(statusKey)" color="primary">作成</v-btn>
+              <v-btn small @click="createTask(statusKey)" :disabled="!task.name" color="primary">作成</v-btn>
             </div>
           </v-card-actions>
         </v-card>
@@ -111,6 +114,10 @@
           group: "myGroup",
           animation: 200
         },
+        nameRules: [
+          v => !!v || 'タスク名は必須です',
+          v => v.length <= 50 || 'タスク名は50字以内で入力してください',
+        ],
       }
     },
 
@@ -132,11 +139,18 @@
       onDetailModalOpen(task) {
         this.$emit('on-detail-modal-open', task)
       },
+
       // タスクの新規作成
       createTask(statusKey) {
         this.is_task_text_hide = true;
         this.task.status = statusKey
         this.$emit('create-task', this.task)
+      },
+
+      // キャンセルボタンが押された時
+      onClickCreateCansel() {
+        this.task.name = '';
+        this.is_task_text_hide = true;
       }
     }
   }
