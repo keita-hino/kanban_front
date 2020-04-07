@@ -9,7 +9,14 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field v-model="selectedTask.name" label="タスク名*" required></v-text-field>
+                <v-text-field
+                  v-model="selectedTask.name"
+                  label="タスク名*"
+                  :counter="50"
+                  :rules="nameRules"
+                  required
+                >
+                </v-text-field>
               </v-col>
 
               <v-col cols="12">
@@ -50,6 +57,8 @@
                 <v-textarea
                   v-model="selectedTask.detail"
                   label="詳細"
+                  :counter="200"
+                  :rules="detailRules"
                   rows="1"
                 ></v-textarea>
               </v-col>
@@ -111,6 +120,13 @@
       return {
         task: {},
         menu2: false,
+        nameRules: [
+          v => !!v || 'タスク名は必須です',
+          v => v.length <= 50 || 'タスク名は50字以内で入力してください',
+        ],
+        detailRules: [
+          v => !!v && v.length <= 200 || '詳細は200字以内で入力してください'
+        ]
       }
     },
 
