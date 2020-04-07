@@ -1,7 +1,7 @@
 <template>
   <v-card color="grey lighten-4 mr-5 pr-5 pl-7 pb-4" width="420" min-height="800">
     <v-layout row wrap>
-      <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">{{ subTitle }}</v-card-subtitle>
+      <v-card-subtitle class="pt-2 pb-0 pl-1 font-weight-black">{{ subTitle }} <span class="blue--text lighten-2--text">{{ tasks.length }}</span></v-card-subtitle>
       <template v-if="is_task_text_hide">
         <!-- タスク追加用カード -->
         <v-card
