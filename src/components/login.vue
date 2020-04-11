@@ -39,7 +39,7 @@
         <v-card-actions class="pt-0">
           <v-spacer></v-spacer>
           <div class="my-2 pr-2">
-            <v-btn small color="primary">ログイン</v-btn>
+            <v-btn @click="login" small color="primary">ログイン</v-btn>
           </div>
         </v-card-actions>
 
@@ -48,3 +48,27 @@
     </v-container>
   </v-content>
 </template>
+
+
+<script>
+  import axios from 'axios';
+  export default {
+    data() {
+      return {
+        menu2: false
+      }
+    },
+
+    methods: {
+      // ログイン
+      login() {
+        axios.get(`${process.env.VUE_APP_API_BASE_URL}/auth/sign_in`)
+          .then(response => {
+            // this.tasks = response.data.tasks
+            // this.priorities = response.data.priorities
+            // this.statuses = response.data.statuses
+          });
+      },
+    }
+  }
+</script>
