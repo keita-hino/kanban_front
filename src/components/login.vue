@@ -15,6 +15,7 @@
           <v-row>
             <v-col cols="11" class="ml-5">
               <v-text-field
+                v-model="user.email"
                 append-icon="person"
                 name="login"
                 label="メールアドレス"
@@ -25,6 +26,7 @@
             </v-col>
             <v-col cols="11" class="ml-5">
               <v-text-field
+                v-model="user.password"
                 append-icon="lock"
                 name="password"
                 label="パスワード"
@@ -55,15 +57,17 @@
   export default {
     data() {
       return {
-        menu2: false
+        menu2: false,
+        user: {}
       }
     },
 
     methods: {
       // ログイン
       login() {
-        axios.get(`${process.env.VUE_APP_API_BASE_URL}/auth/sign_in`)
+        axios.post(`${process.env.VUE_APP_API_BASE_URL}/auth/sign_in`, this.user)
           .then(response => {
+            console.log(response)
             // this.tasks = response.data.tasks
             // this.priorities = response.data.priorities
             // this.statuses = response.data.statuses
