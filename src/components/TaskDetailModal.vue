@@ -64,7 +64,7 @@
               </v-col>
             </v-row>
           </v-container>
-          <small>*は必須項目です</small>
+          <small class="red--text lighten-1--text">*は必須項目です</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
