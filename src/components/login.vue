@@ -74,9 +74,9 @@
               user: response.data.data
             }
             Store.commit('auth/login', data);
-            this.$router.push('/');
+            this.$router.push({name: 'Tasks'});
           });
-      },
+      }
     }
   }
 </script>

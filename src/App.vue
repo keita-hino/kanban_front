@@ -9,6 +9,8 @@
 
 <script>
   import Header from './components/Header'
+  import Store from './store'
+
   export default {
     data: function () {
       return {
@@ -17,6 +19,11 @@
     components: {
       Header
     },
+    mounted(){
+      if(Store.state.auth.uid == null){
+        this.$router.push({name: 'Login'})
+      }
+    }
 
   }
 </script>

@@ -10,12 +10,12 @@
 
     <v-spacer></v-spacer>
 
-    <span class="pr-2">{{ fullName() }}</span>
+    <span v-if="isLogined()" class="pr-2">{{ fullName() }}</span>
 
-    <v-tooltip bottom>
+    <v-tooltip v-if="isLogined()" bottom>
       <template v-slot:activator="{ on }">
           <div v-on="on">
-            <v-btn icon>
+            <v-btn icon @click="onClickLogout">
               <v-icon>mdi-logout</v-icon>
             </v-btn>
           </div>
@@ -36,8 +36,20 @@
       }
     },
     methods: {
+      // ログアウトボタン押下時
+      onClickLogout() {
+        Store.commit('auth/logout');
+        this.$router.push({name: 'Login'})
+      },
+
+      // フルネーム取得
       fullName(){
         return `${Store.state.auth.last_name} ${Store.state.auth.first_name}`
+      },
+
+      // ログインしているか
+      isLogined() {
+        return Store.state.auth.uid != null
       }
     }
   }
