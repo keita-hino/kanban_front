@@ -54,6 +54,8 @@
 
 <script>
   import axios from 'axios';
+  import Store from '../store'
+
   export default {
     data() {
       return {
@@ -67,10 +69,12 @@
       login() {
         axios.post(`${process.env.VUE_APP_API_BASE_URL}/auth/sign_in`, this.user)
           .then(response => {
-            console.log(response)
-            // this.tasks = response.data.tasks
-            // this.priorities = response.data.priorities
-            // this.statuses = response.data.statuses
+            // TODO:ログイン失敗した場合の処理追加
+            const data = {
+              user: response.data.data
+            }
+            Store.commit('auth/login', data);
+            this.$router.push('/');
           });
       },
     }
