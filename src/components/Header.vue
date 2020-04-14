@@ -10,11 +10,22 @@
 
     <v-spacer></v-spacer>
 
-    <a v-if="isLogined()" class="profile-menu">
-      <!-- TODO:後にプロフィール画像にする -->
-      {{ fullName() }}
-      <i class="v-icon profile-menu notranslate hidden-sm-and-down mdi mdi-menu-down theme--light"></i>
-    </a>
+      <!-- プロフィール周り -->
+      <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <a v-if="isLogined()" v-on="on" class="profile-menu">
+            <!-- TODO:後にプロフィール画像にする -->
+            {{ fullName() }}
+            <i class="v-icon profile-menu notranslate hidden-sm-and-down mdi mdi-menu-down theme--light"></i>
+          </a>
+        </template>
+
+        <v-list tag="a" dense>
+          <v-list-item>
+            <v-list-item-title @click="onProfileModalOpen()">プロフィール編集</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
 
     <v-tooltip v-if="isLogined()" bottom>
       <template v-slot:activator="{ on }">
@@ -27,18 +38,29 @@
       <span>ログアウト</span>
     </v-tooltip>
 
+    <UserProfileModal
+      :is-profile-modal-show="is_profile_modal_show"
+    />
+
   </v-app-bar>
 </template>
 
 
 <script>
   import Store from '../store'
+  import UserProfileModal from './UserProfileModal'
+
   export default {
     data: function () {
       return {
-        drawer: false
+        drawer: false,
+        is_profile_modal_show: false
       }
     },
+    components:{
+      UserProfileModal
+    },
+
     methods: {
       // ログアウトボタン押下時
       onClickLogout() {
@@ -54,7 +76,12 @@
       // ログインしているか
       isLogined() {
         return Store.state.auth.uid != null
-      }
+      },
+
+      // プロファイル設定モーダルを開く
+      onProfileModalOpen() {
+        this.is_profile_modal_show = true;
+      },
     }
   }
 </script>
