@@ -10,7 +10,11 @@
 
     <v-spacer></v-spacer>
 
-    <span v-if="isLogined()" class="pr-2">{{ fullName() }}</span>
+    <a v-if="isLogined()" class="profile-menu">
+      <!-- TODO:後にプロフィール画像にする -->
+      {{ fullName() }}
+      <i class="v-icon profile-menu notranslate hidden-sm-and-down mdi mdi-menu-down theme--light"></i>
+    </a>
 
     <v-tooltip v-if="isLogined()" bottom>
       <template v-slot:activator="{ on }">
@@ -54,3 +58,10 @@
     }
   }
 </script>
+
+<style>
+  .profile-menu{
+    color:#ffffff !important;
+  }
+
+</style>
