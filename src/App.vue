@@ -19,11 +19,12 @@
     components: {
       Header
     },
+
     mounted(){
-      if(Store.state.auth.uid == null){
+      if(Store.state.auth.uid == null && this.$route.name != 'Login'){
         this.$router.push({name: 'Login'})
       }
-    }
+    },
 
   }
 </script>

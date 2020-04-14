@@ -61,6 +61,7 @@
 <script>
   // Ajax通信ライブラリ
   import axios from 'axios';
+  import Store from '../../store'
   import TaskCard from '../../components/TaskCard'
   import TaskDetailModal from '../../components/TaskDetailModal'
 
@@ -187,6 +188,10 @@
 
     mounted(){
       this.getTasks();
+      // TODO:ここは共通でできるようにする
+      if(Store.state.auth.uid == null && this.$route.name != 'Login'){
+        this.$router.push({name: 'Login'})
+      }
     },
 
     computed: {
