@@ -2,11 +2,11 @@
   <v-dialog v-model="isProfileModalShow" persistent max-width="600px">
     <v-card>
       <v-card-title>
-        <span class="headline">ユーザ設定</span>
+        <span class="sub-title">ユーザ設定</span>
       </v-card-title>
       <v-card-text>
         <v-container>
-          <v-row class="d-flex">
+          <v-row class="d-flex flex-wrap">
             <!-- <v-col cols="12" sm="6" md="6">
               <img-inputer v-model="file"
                 theme="light"
