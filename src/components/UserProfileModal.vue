@@ -15,19 +15,19 @@
                 bottom-text="ファイルをドロップするかここをクリックしてください" />
             </v-col> -->
             <v-col cols="12" sm="6" md="6">
-              <v-text-field label="姓*" required></v-text-field>
+              <v-text-field v-model="user.last_name" label="姓*" required></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field label="名*" required></v-text-field>
+              <v-text-field v-model="user.first_name" label="名*" required></v-text-field>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12">
-              <v-text-field label="メールアドレス*" required></v-text-field>
+              <v-text-field  v-model="user.uid" label="メールアドレス*" required></v-text-field>
             </v-col>
             <v-col cols="12">
               <!-- TODO:目のアイコンを設置して見えるようにする -->
-              <v-text-field label="パスワード" type="password"></v-text-field>
+              <v-text-field v-model="user.password" label="パスワード" type="password"></v-text-field>
             </v-col>
           </v-row>
         </v-container>
@@ -35,8 +35,8 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="isProfileModalShow = false">閉じる</v-btn>
-        <v-btn color="blue darken-1" text @click="isProfileModalShow = false">変更</v-btn>
+        <v-btn color="blue darken-1" text @click="$emit('on-click-modal-cancel')">閉じる</v-btn>
+        <v-btn color="blue darken-1" text @click="onClickUpdateUser()">変更</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -50,6 +50,19 @@
       // モーダル表示/非表示
       isProfileModalShow: {
         type: Boolean,
+      },
+
+      // ログイン中のユーザ
+      user: {
+        type: Object
+      }
+    },
+
+    watch: {
+      isProfileModalShow(new_is_profile_modal_show) {
+        if(new_is_profile_modal_show) {
+          this.init()
+        }
       }
     },
 
@@ -62,5 +75,17 @@
     components: {
       // ImgInputer
     },
+
+    methods: {
+      // モーダルを開いた時
+      init() {
+        this.user.before_uid = this.user.uid;
+      },
+
+      // 変更ボタンが押された時
+      onClickUpdateUser() {
+        this.$emit('update-user', this.user)
+      },
+    }
   }
 </script>>

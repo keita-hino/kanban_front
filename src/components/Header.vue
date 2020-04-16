@@ -39,7 +39,11 @@
     </v-tooltip>
 
     <UserProfileModal
+      @on-click-modal-cancel="onClickModalCancel"
+      @update-user="updateUser"
       :is-profile-modal-show="is_profile_modal_show"
+      :user="user"
+
     />
 
   </v-app-bar>
@@ -47,12 +51,15 @@
 
 
 <script>
+  // Ajax通信ライブラリ
+  import axios from 'axios';
   import Store from '../store'
   import UserProfileModal from './UserProfileModal'
 
   export default {
     data: function () {
       return {
+        user: {},
         drawer: false,
         is_profile_modal_show: false
       }
@@ -66,6 +73,24 @@
       onClickLogout() {
         Store.commit('auth/logout');
         this.$router.push({name: 'Login'})
+      },
+
+      // ユーザ設定モーダルでキャンセルボタンが押された時
+      onClickModalCancel() {
+        this.is_profile_modal_show = false;
+      },
+
+      // ユーザ設定モーダルで更新ボタンが押された時
+      updateUser(user) {
+        axios.patch(`${process.env.VUE_APP_API_BASE_URL}/users`, {
+          user: user,
+        })
+        .then( () => {
+          this.is_profile_modal_show = false;
+          Store.commit('auth/logout');
+          this.$router.push({name: 'Login'})
+        });
+
       },
 
       // フルネーム取得
@@ -82,7 +107,12 @@
       onProfileModalOpen() {
         this.is_profile_modal_show = true;
       },
-    }
+    },
+
+    mounted(){
+      // TODO:ディープコピーする
+      this.user = Store.state.auth
+    },
   }
 </script>
 
