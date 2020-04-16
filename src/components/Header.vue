@@ -10,7 +10,22 @@
 
     <v-spacer></v-spacer>
 
-    <span v-if="isLogined()" class="pr-2">{{ fullName() }}</span>
+      <!-- プロフィール周り -->
+      <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <a v-if="isLogined()" v-on="on" class="profile-menu">
+            <!-- TODO:後にプロフィール画像にする -->
+            {{ fullName() }}
+            <i class="v-icon profile-menu notranslate hidden-sm-and-down mdi mdi-menu-down theme--light"></i>
+          </a>
+        </template>
+
+        <v-list tag="a" dense>
+          <v-list-item>
+            <v-list-item-title @click="onProfileModalOpen()">プロフィール編集</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
 
     <v-tooltip v-if="isLogined()" bottom>
       <template v-slot:activator="{ on }">
@@ -23,23 +38,59 @@
       <span>ログアウト</span>
     </v-tooltip>
 
+    <UserProfileModal
+      @on-click-modal-cancel="onClickModalCancel"
+      @update-user="updateUser"
+      :is-profile-modal-show="is_profile_modal_show"
+      :user="user"
+
+    />
+
   </v-app-bar>
 </template>
 
 
 <script>
+  // Ajax通信ライブラリ
+  import axios from 'axios';
   import Store from '../store'
+  import UserProfileModal from './UserProfileModal'
+
   export default {
     data: function () {
       return {
-        drawer: false
+        user: {},
+        drawer: false,
+        is_profile_modal_show: false
       }
     },
+    components:{
+      UserProfileModal
+    },
+
     methods: {
       // ログアウトボタン押下時
       onClickLogout() {
         Store.commit('auth/logout');
         this.$router.push({name: 'Login'})
+      },
+
+      // ユーザ設定モーダルでキャンセルボタンが押された時
+      onClickModalCancel() {
+        this.is_profile_modal_show = false;
+      },
+
+      // ユーザ設定モーダルで更新ボタンが押された時
+      updateUser(user) {
+        axios.patch(`${process.env.VUE_APP_API_BASE_URL}/users`, {
+          user: user,
+        })
+        .then( () => {
+          this.is_profile_modal_show = false;
+          Store.commit('auth/logout');
+          this.$router.push({name: 'Login'})
+        });
+
       },
 
       // フルネーム取得
@@ -50,7 +101,24 @@
       // ログインしているか
       isLogined() {
         return Store.state.auth.uid != null
-      }
-    }
+      },
+
+      // プロファイル設定モーダルを開く
+      onProfileModalOpen() {
+        this.is_profile_modal_show = true;
+      },
+    },
+
+    mounted(){
+      // TODO:ディープコピーする
+      this.user = Store.state.auth
+    },
   }
 </script>
+
+<style>
+  .profile-menu{
+    color:#ffffff !important;
+  }
+
+</style>
