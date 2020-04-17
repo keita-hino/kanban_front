@@ -12,8 +12,8 @@
 
       <!-- プロフィール周り -->
       <v-menu offset-y>
-        <template v-slot:activator="{ on }">
-          <a v-if="isLogined()" v-on="on" class="profile-menu">
+        <template  v-if="isLogined()" v-slot:activator="{ on }">
+          <a v-on="on" class="profile-menu">
             <!-- TODO:後にプロフィール画像にする -->
             {{ fullName() }}
             <i class="v-icon profile-menu notranslate hidden-sm-and-down mdi mdi-menu-down theme--light"></i>
@@ -110,8 +110,7 @@
     },
 
     mounted(){
-      // TODO:ディープコピーする
-      this.user = Store.state.auth
+      this.user = JSON.parse(JSON.stringify(Store.state.auth));
     },
   }
 </script>
