@@ -1,7 +1,9 @@
 <template>
   <v-app id="inspire">
+    <Header v-if="!isLogined()"/>
     <!-- <SideBar/> -->
     <v-card
+      v-else-if="isLogined()"
       app
       class="mx-auto"
       height="300"
@@ -20,11 +22,6 @@
             mini-variant-width="56"
             permanent
           >
-            <v-list-item class="px-2">
-              <v-list-item-avatar>
-                <v-img src="https://randomuser.me/api/portraits/women/75.jpg"></v-img>
-              </v-list-item-avatar>
-            </v-list-item>
 
             <v-divider></v-divider>
 
@@ -76,6 +73,13 @@
     components: {
       Header,
       // SideBar
+    },
+
+    methods:{
+      // ログインしているか
+      isLogined() {
+        return Store.state.auth.uid != null
+      },
     },
 
     mounted(){
