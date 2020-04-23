@@ -33,6 +33,7 @@
               size="36"
               :tile="true"
               class="mb-4 avator"
+              @click="onClickWorkspace(workspace)"
             >
               <img
                 :src="imageUrl(workspace.image_url)"
@@ -71,6 +72,7 @@
     data () {
       return {
         workspaces: {},
+        // TODO:あとで削除
         drawer: true,
         items: [
           { title: 'Home', icon: 'mdi-home-city' },
@@ -92,6 +94,11 @@
           .then(response => {
             this.workspaces = response.data.workspaces
           });
+      },
+
+      // ワークスペースが選択された時
+      onClickWorkspace(workspace){
+        this.$store.commit('workspace/setWorkspace', workspace);
       },
 
       // 画像のパスを整形する

@@ -5,7 +5,7 @@
         class="lighten-4"
         justify="center" align-content="start"
       >
-        <div id="top" class='headline font-italic font-weight-light mt-2 mb-7'>カンバンボード</div>
+        <div id="top" class='headline font-italic font-weight-light mt-2 mb-7'>{{ $store.getters['workspace/name'] }}</div>
       </v-row>
 
       <div class='d-flex'>
@@ -88,7 +88,8 @@
     methods: {
       // 登録されているタスクを取得する
       getTasks() {
-        axios.get(`${process.env.VUE_APP_API_BASE_URL}/tasks`)
+        let workspace_id = this.$store.getters['workspace/id']
+        axios.get(`${process.env.VUE_APP_API_BASE_URL}/tasks`, { params: {workspace_id: workspace_id} })
           .then(response => {
             this.tasks = response.data.tasks
             this.priorities = response.data.priorities
@@ -192,6 +193,13 @@
       if(Store.state.auth.uid == null && this.$route.name != 'Login'){
         this.$router.push({name: 'Login'})
       }
+
+      // ワークスペースが変更されたら再度Taskを取得する
+      this.$store.subscribe((mutation) => {
+        if (mutation.type === 'workspace/setWorkspace') {
+          this.getTasks();
+        }}
+      )
     },
 
     computed: {
