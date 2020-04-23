@@ -105,6 +105,7 @@
         type: Array,
       }
     },
+
     data() {
       return {
         is_task_text_hide: true,
@@ -125,7 +126,20 @@
       draggable
     },
 
+    watch: {
+      is_task_text_hide(is_task_text_hide) {
+        if(!is_task_text_hide) {
+          this.init()
+        }
+      }
+    },
+
     methods: {
+      // 初期化処理
+      init() {
+        this.task = {};
+      },
+
       onUpdateTaskStatus(event) {
         this.$emit('on-update-task-status', event)
       },
