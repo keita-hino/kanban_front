@@ -88,7 +88,7 @@
     methods: {
       // 登録されているタスクを取得する
       getTasks() {
-        let workspace_id = this.$store.getters['workspace/id']
+        let workspace_id = this.getWorkspaceId()
         axios.get(`${process.env.VUE_APP_API_BASE_URL}/tasks`, { params: {workspace_id: workspace_id} })
           .then(response => {
             this.tasks = response.data.tasks
@@ -99,9 +99,11 @@
 
       // タスクの新規作成
       createTask(task) {
+        let workspace_id = this.getWorkspaceId()
         // タスク新規作成
         axios.post(`${process.env.VUE_APP_API_BASE_URL}/tasks`, {
           task: task,
+          workspace_id: workspace_id
         })
         .then( response => {
           this.is_task_text_hide = true;
@@ -122,9 +124,13 @@
 
       // タスク詳細設定用モーダルで保存ボタンが押された時
       onClickTaskDetailSave(task){
+        // ワークスペースID取得
+        let workspace_id = this.getWorkspaceId()
+
         // タスク更新
         axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks`, {
           task: task,
+          workspace_id: workspace_id,
         })
         .then( response => {
           this.is_task_detail_modal_show = false;
@@ -134,9 +140,12 @@
 
       // 縦に移動した時に発火
       // TODO:コンポーネント側にロジックを移動してtaskを受け取るだけにする
+      // TODO:下記のリファクタリング
       onUpdateTaskStatus(event){
-        // TODO:下記のリファクタリング
-        // 該当のレーン情のタスク取得
+        // ワークスペースID取得
+        let workspace_id = this.getWorkspaceId()
+
+        // 該当のレーン上のタスク取得
         const status = event.from.getAttribute('data-column-status')
         let filteredTasks = this.tasks.filter( task => task.status == status )
 
@@ -152,7 +161,8 @@
         // タスクの並び更新処理
         axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks/moved_tasks`, {
           task: movedTask,
-          old_display_order: movedTask.display_order
+          old_display_order: movedTask.display_order,
+          workspace_id: workspace_id,
         })
         .then( response => {
           this.tasks = response.data.tasks
@@ -165,6 +175,10 @@
         if(event.from.getAttribute('data-column-status') == event.to.getAttribute('data-column-status')){
           return 0
         }
+
+        // ワークスペースID取得
+        let workspace_id = this.getWorkspaceId()
+
         // TODO:ロジックのリファクタリング
         let status = event.from.getAttribute('data-column-status')
         let filteredTasks = this.tasks.filter( task => task.status == status )
@@ -178,12 +192,18 @@
 
         // タスクの並び更新処理
         axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks/update_status_task`, {
-          task: findedTask
+          task: findedTask,
+          workspace_id: workspace_id,
         })
         .then( response => {
           this.tasks = response.data.tasks
         });
 
+      },
+
+      // ストアからワークスペースIDを取得する
+      getWorkspaceId() {
+        return this.$store.getters['workspace/id']
       }
     },
 
