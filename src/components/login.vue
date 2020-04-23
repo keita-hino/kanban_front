@@ -74,6 +74,7 @@
               user: response.data.data
             }
             Store.commit('auth/login', data);
+            this.$store.commit('workspace/setWorkspace', response.data.workspace);
             this.$router.push({name: 'Tasks'});
           });
       }

@@ -1,4 +1,4 @@
- <template>
+<template>
   <v-app-bar
     color="blue lighten-1"
     dense
