@@ -24,12 +24,13 @@
           <v-list
             dense
             nav
+            class="pt-0"
           >
 
           <v-list-item-action>
             <v-avatar
               v-for="workspace in workspaces" :key="workspace.id"
-              size="40"
+              size="36"
               :tile="true"
               class="mb-4 avator"
             >
