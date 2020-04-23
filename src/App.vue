@@ -24,11 +24,6 @@
   export default {
     data: function () {
       return {
-        items: [
-          { title: 'Home', icon: 'dashboard' },
-          { title: 'About', icon: 'question_answer' },
-        ],
-        mini: true,
       }
     },
     components: {

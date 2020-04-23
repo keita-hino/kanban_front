@@ -26,7 +26,22 @@
             nav
           >
 
-            <v-list-item
+          <v-list-item-action>
+            <v-avatar
+              v-for="workspace in workspaces" :key="workspace.id"
+              size="40"
+              :tile="true"
+              class="mb-4 avator"
+            >
+              <img
+                :src="imageUrl(workspace.image_url)"
+                alt="John"
+                @click="''"
+              >
+            </v-avatar>
+          </v-list-item-action>
+
+            <!-- <v-list-item
               v-for="item in items"
               :key="item.title"
               @click="''"
@@ -38,7 +53,7 @@
               <v-list-item-content>
                 <v-list-item-title>{{ item.title }}</v-list-item-title>
               </v-list-item-content>
-            </v-list-item>
+            </v-list-item> -->
           </v-list>
         </v-navigation-drawer>
         <slot/>
@@ -48,9 +63,13 @@
 </template>
 
 <script>
+  // Ajax通信ライブラリ
+  import axios from 'axios';
+
   export default {
     data () {
       return {
+        workspaces: {},
         drawer: true,
         items: [
           { title: 'Home', icon: 'mdi-home-city' },
@@ -59,6 +78,33 @@
         ],
         mini: true,
       }
+    },
+
+    mounted() {
+      this.getWorkspaces();
+    },
+
+    methods: {
+      // ユーザーが所属しているワークスペースを取得する
+      getWorkspaces() {
+        axios.get(`${process.env.VUE_APP_API_BASE_URL}/workspaces`, {params: { uid: this.$store.state.auth.uid }})
+          .then(response => {
+            this.workspaces = response.data.workspaces
+          });
+      },
+
+      // 画像のパスを整形する
+      imageUrl(image_url){
+        return `${process.env.VUE_APP_BASE_URL}/${image_url}`
+      }
+
     }
   }
 </script>
+
+<style>
+  .avator{
+    cursor: pointer;
+    cursor: hand;
+  }
+</style>
