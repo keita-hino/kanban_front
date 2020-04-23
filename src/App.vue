@@ -1,14 +1,24 @@
 <template>
   <v-app id="inspire">
-    <Header/>
-    <div class="container">
-      <router-view/>
-    </div>
+    <template v-if="!isLogined()">
+      <Header/>
+      <div class="container">
+        <router-view/>
+      </div>
+    </template>
+
+    <SideBar v-else-if="isLogined()">
+      <Header/>
+      <div class="container">
+        <router-view/>
+      </div>
+    </SideBar>
   </v-app>
 </template>
 
 <script>
   import Header from './components/Header'
+  import SideBar from './components/SideBar'
   import Store from './store'
 
   export default {
@@ -17,7 +27,15 @@
       }
     },
     components: {
-      Header
+      Header,
+      SideBar
+    },
+
+    methods:{
+      // ログインしているか
+      isLogined() {
+        return Store.state.auth.uid != null
+      },
     },
 
     mounted(){
