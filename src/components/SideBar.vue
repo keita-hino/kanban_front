@@ -27,36 +27,23 @@
             class="pt-0"
           >
 
-          <v-list-item-action>
-            <v-avatar
-              v-for="workspace in workspaces" :key="workspace.id"
-              size="36"
-              :tile="true"
-              class="mb-4 avator"
-              v-ripple
-              @click="onClickWorkspace(workspace)"
-            >
-              <img
-                :src="imageUrl(workspace.image_url)"
-                alt="John"
-                @click="''"
+            <v-list-item-action>
+              <v-avatar
+                v-for="workspace in workspaces" :key="workspace.id"
+                size="36"
+                :tile="true"
+                class="mb-4 avator"
+                v-ripple
+                @click="onClickWorkspace(workspace)"
               >
-            </v-avatar>
-          </v-list-item-action>
+                <img
+                  :src="imageUrl(workspace.image_url)"
+                  alt="John"
+                  @click="''"
+                >
+              </v-avatar>
+            </v-list-item-action>
 
-            <!-- <v-list-item
-              v-for="item in items"
-              :key="item.title"
-              @click="''"
-            >
-              <v-list-item-action>
-                <v-icon>{{ item.icon }}</v-icon>
-              </v-list-item-action>
-
-              <v-list-item-content>
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item> -->
           </v-list>
         </v-navigation-drawer>
         <slot/>
