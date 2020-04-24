@@ -53,7 +53,6 @@
 <script>
   // Ajax通信ライブラリ
   import axios from 'axios';
-  import Store from '../store'
   import UserProfileModal from './UserProfileModal'
 
   export default {
@@ -71,7 +70,7 @@
     methods: {
       // ログアウトボタン押下時
       onClickLogout() {
-        Store.commit('auth/logout');
+        this.$store.commit('auth/logout');
         this.$router.push({name: 'Login'})
       },
 
@@ -87,7 +86,7 @@
         })
         .then( () => {
           this.is_profile_modal_show = false;
-          Store.commit('auth/logout');
+          this.$store.commit('auth/logout');
           this.$router.push({name: 'Login'})
         });
 
@@ -95,12 +94,12 @@
 
       // フルネーム取得
       fullName(){
-        return `${Store.state.auth.last_name} ${Store.state.auth.first_name}`
+        return `${this.$store.state.auth.last_name} ${this.$store.state.auth.first_name}`
       },
 
       // ログインしているか
       isLogined() {
-        return Store.state.auth.uid != null
+        return this.$store.state.auth.uid != null
       },
 
       // プロファイル設定モーダルを開く
@@ -110,7 +109,7 @@
     },
 
     mounted(){
-      this.user = JSON.parse(JSON.stringify(Store.state.auth));
+      this.user = JSON.parse(JSON.stringify(this.$store.state.auth));
     },
   }
 </script>

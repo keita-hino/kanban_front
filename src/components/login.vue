@@ -54,7 +54,6 @@
 
 <script>
   import axios from 'axios';
-  import Store from '../store'
 
   export default {
     data() {
@@ -73,7 +72,7 @@
             const data = {
               user: response.data.data
             }
-            Store.commit('auth/login', data);
+            this.$store.commit('auth/login', data);
             this.$store.commit('workspace/setWorkspace', response.data.workspace);
             this.$router.push({name: 'Tasks'});
           });
