@@ -33,6 +33,7 @@
               size="36"
               :tile="true"
               class="mb-4 avator"
+              v-ripple
               @click="onClickWorkspace(workspace)"
             >
               <img
