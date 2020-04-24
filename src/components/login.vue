@@ -58,7 +58,6 @@
   export default {
     data() {
       return {
-        menu2: false,
         user: {}
       }
     },

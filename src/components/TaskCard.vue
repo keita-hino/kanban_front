@@ -77,22 +77,6 @@
   import draggable from 'vuedraggable'
   export default {
     props: {
-      // モーダルが開いた時のコールバックメソッド
-      onModalOpen: {
-        type: Function,
-      },
-      // モーダルが閉じた時のコールバックメソッド
-      onModalClose: {
-        type: Function,
-      },
-      // OKボタン押下時のコールバックメソッド
-      onClickSend: {
-        type: Function,
-      },
-      // キャンセルボタン押下時のコールバックメソッド
-      onClickCancel: {
-        type: Function,
-      },
       // レーン名
       subTitle: {
         type: String,
