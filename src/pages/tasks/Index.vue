@@ -21,7 +21,6 @@
             @create-task="createTask"
           />
         </template>
-
       </div>
 
       <TaskDetailModal
