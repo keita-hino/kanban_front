@@ -9,38 +9,18 @@
       </v-row>
 
       <div class='d-flex'>
-        <!-- TODO:列も動的に増やせるように -->
-        <!-- TODO:ここもループでできるように -->
-        <!-- TODO:statusを日本語化したものをHashにしてv-forで回す -->
-        <TaskCard
-          :sub-title="'未着手'"
-          :status-key="'unstarted'"
-          :tasks="unstartedTasks"
-          @on-update-task-status="onUpdateTaskStatus"
-          @on-draggable-end="draggableEnd"
-          @on-detail-modal-open="onDetailModalOpen"
-          @create-task="createTask"
-        />
-
-        <TaskCard
-          :sub-title="'着手中'"
-          :status-key="'in_progress'"
-          :tasks="inProgressTasks"
-          @on-update-task-status="onUpdateTaskStatus"
-          @on-draggable-end="draggableEnd"
-          @on-detail-modal-open="onDetailModalOpen"
-          @create-task="createTask"
-        />
-
-        <TaskCard
-          :sub-title="'完了'"
-          :status-key="'done'"
-          :tasks="doneTasks"
-          @on-update-task-status="onUpdateTaskStatus"
-          @on-draggable-end="draggableEnd"
-          @on-detail-modal-open="onDetailModalOpen"
-          @create-task="createTask"
-        />
+        <template v-for="(status, key) in statuses">
+          <TaskCard
+            :key="key"
+            :sub-title="status"
+            :status-key="key"
+            :tasks="filteredTasks(key)"
+            @on-update-task-status="onUpdateTaskStatus"
+            @on-draggable-end="draggableEnd"
+            @on-detail-modal-open="onDetailModalOpen"
+            @create-task="createTask"
+          />
+        </template>
 
       </div>
 
@@ -203,7 +183,12 @@
       // ストアからワークスペースIDを取得する
       getWorkspaceId() {
         return this.$store.getters['workspace/id']
-      }
+      },
+
+      // ステータスでフィルタリングしたタスクを返す
+      filteredTasks(key) {
+        return this.tasks.filter( task => task.status == key )
+      },
     },
 
     mounted(){
@@ -222,20 +207,6 @@
     },
 
     computed: {
-      // 未着手のタスク取得
-      unstartedTasks(){
-        return this.tasks.filter( task => task.status == 'unstarted' )
-      },
-
-      // 着手中のタスク取得
-      inProgressTasks(){
-        return this.tasks.filter( task => task.status == 'in_progress' )
-      },
-
-      // 完了のタスク取得
-      doneTasks(){
-        return this.tasks.filter( task => task.status == 'done' )
-      }
     }
   }
 </script>
