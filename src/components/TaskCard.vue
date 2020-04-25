@@ -49,7 +49,7 @@
       <draggable
         group="myGroup"
         tag="div"
-        :options="options"
+        v-bind="options"
         @update="onUpdateTaskStatus"
         @end="draggableEnd"
         :data-column-status="statusKey"
