@@ -147,7 +147,7 @@
 
       // キャンセルボタンが押された時
       onClickCreateCansel() {
-        this.task.name = '';
+        this.task = {};
         this.is_task_text_hide = true;
       }
     }
