@@ -38,8 +38,6 @@
 </template>
 
 <script>
-  // Ajax通信ライブラリ
-  import axios from 'axios';
   import TaskCard from '../../components/TaskCard'
   import TaskDetailModal from '../../components/TaskDetailModal'
 
@@ -67,7 +65,7 @@
       // 登録されているタスクを取得する
       getTasks() {
         let workspace_id = this.getWorkspaceId()
-        axios.get(`${process.env.VUE_APP_API_BASE_URL}/tasks`, { params: {workspace_id: workspace_id} })
+        this.axios.get(`${process.env.VUE_APP_API_BASE_URL}/tasks`, { params: {workspace_id: workspace_id} })
           .then(response => {
             this.tasks = response.data.tasks
             this.priorities = response.data.priorities
@@ -79,7 +77,7 @@
       createTask(task) {
         let workspace_id = this.getWorkspaceId()
         // タスク新規作成
-        axios.post(`${process.env.VUE_APP_API_BASE_URL}/tasks`, {
+        this.axios.post(`${process.env.VUE_APP_API_BASE_URL}/tasks`, {
           task: task,
           workspace_id: workspace_id
         })
@@ -106,7 +104,7 @@
         let workspace_id = this.getWorkspaceId()
 
         // タスク更新
-        axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks`, {
+        this.axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks`, {
           task: task,
           workspace_id: workspace_id,
         })
@@ -137,7 +135,7 @@
         movedTask.display_order = oldTask.display_order
 
         // タスクの並び更新処理
-        axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks/moved_tasks`, {
+        this.axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks/moved_tasks`, {
           task: movedTask,
           old_display_order: movedTask.display_order,
           workspace_id: workspace_id,
@@ -169,7 +167,7 @@
         findedTask.display_order = findOldTasks.find( (task, index) => index == event.newIndex ).display_order
 
         // タスクの並び更新処理
-        axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks/update_status_task`, {
+        this.axios.patch(`${process.env.VUE_APP_API_BASE_URL}/tasks/update_status_task`, {
           task: findedTask,
           workspace_id: workspace_id,
         })

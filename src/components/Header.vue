@@ -51,8 +51,6 @@
 
 
 <script>
-  // Ajax通信ライブラリ
-  import axios from 'axios';
   import UserProfileModal from './UserProfileModal'
 
   export default {
@@ -81,7 +79,7 @@
 
       // ユーザ設定モーダルで更新ボタンが押された時
       updateUser(user) {
-        axios.patch(`${process.env.VUE_APP_API_BASE_URL}/users`, {
+        this.axios.patch(`${process.env.VUE_APP_API_BASE_URL}/users`, {
           user: user,
         })
         .then( () => {
