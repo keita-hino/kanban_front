@@ -53,9 +53,6 @@
 </template>
 
 <script>
-  // Ajax通信ライブラリ
-  import axios from 'axios';
-
   export default {
     data () {
       return {
@@ -70,7 +67,7 @@
     methods: {
       // ユーザーが所属しているワークスペースを取得する
       getWorkspaces() {
-        axios.get(`${process.env.VUE_APP_API_BASE_URL}/workspaces`, {params: { uid: this.$store.state.auth.uid }})
+        this.axios.get(`${process.env.VUE_APP_API_BASE_URL}/workspaces`, {params: { uid: this.$store.state.auth.uid }})
           .then(response => {
             this.workspaces = response.data.workspaces
           });
