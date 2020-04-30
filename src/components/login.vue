@@ -53,8 +53,6 @@
 
 
 <script>
-  import axios from 'axios';
-
   export default {
     data() {
       return {
@@ -65,7 +63,7 @@
     methods: {
       // ログイン
       login() {
-        axios.post(`${process.env.VUE_APP_API_BASE_URL}/auth/sign_in`, this.user)
+        this.axios.post(`${process.env.VUE_APP_API_BASE_URL}/auth/sign_in`, this.user)
           .then(response => {
             // TODO:ログイン失敗した場合の処理追加
             const data = {
