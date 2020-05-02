@@ -97,17 +97,14 @@
 
       // ログインしているか
       isLogined() {
-        return this.$store.state.auth.uid != null
+        return this.$store.state.auth.email != null
       },
 
       // プロファイル設定モーダルを開く
       onProfileModalOpen() {
         this.is_profile_modal_show = true;
+        this.user = JSON.parse(JSON.stringify(this.$store.state.auth));
       },
-    },
-
-    mounted(){
-      this.user = JSON.parse(JSON.stringify(this.$store.state.auth));
     },
   }
 </script>
