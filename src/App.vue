@@ -34,12 +34,12 @@
     methods:{
       // ログインしているか
       isLogined() {
-        return Store.state.auth.uid != null
+        return Store.state.auth.email != null
       },
     },
 
     mounted(){
-      if(Store.state.auth.uid == null && this.$route.name != 'Login'){
+      if(Store.state.auth.email == null && this.$route.name != 'Login'){
         this.$router.push({name: 'Login'})
       }
     },

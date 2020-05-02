@@ -191,7 +191,7 @@
     mounted(){
       this.getTasks();
       // TODO:ここは共通でできるようにする
-      if(this.$store.state.auth.uid == null && this.$route.name != 'Login'){
+      if(this.$store.state.auth.email == null && this.$route.name != 'Login'){
         this.$router.push({name: 'Login'})
       }
 
