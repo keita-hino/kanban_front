@@ -19,7 +19,7 @@ const router = new VueRouter({
 });
 
 const loginCheck = (to) => {
-  const loggedIn = to.matched.some(record => record.meta.isPublic) || Store.state.auth.uid != null;
+  const loggedIn = to.matched.some(record => record.meta.isPublic) || Store.state.auth.email != null;
   return loggedIn;
 }
 

@@ -97,7 +97,7 @@
 
       // ログインしているか
       isLogined() {
-        return this.$store.state.auth.uid != null
+        return this.$store.state.auth.email != null
       },
 
       // プロファイル設定モーダルを開く

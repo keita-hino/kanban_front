@@ -67,7 +67,7 @@
     methods: {
       // ユーザーが所属しているワークスペースを取得する
       getWorkspaces() {
-        this.axios.get(`${process.env.VUE_APP_API_BASE_URL}/workspaces`, {params: { uid: this.$store.state.auth.uid }})
+        this.axios.get(`${process.env.VUE_APP_API_BASE_URL}/workspaces`, {params: { email: this.$store.state.auth.email }})
           .then(response => {
             this.workspaces = response.data.workspaces
           });
