@@ -29,12 +29,12 @@
 
     <v-tooltip v-if="isLogined()" bottom>
       <template v-slot:activator="{ on }">
-          <div v-on="on">
-            <v-btn icon @click="onClickLogout">
-              <v-icon>mdi-logout</v-icon>
-            </v-btn>
-          </div>
-          </template>
+        <div v-on="on">
+          <v-btn icon @click="onClickLogout">
+            <v-icon>mdi-logout</v-icon>
+          </v-btn>
+        </div>
+        </template>
       <span>ログアウト</span>
     </v-tooltip>
 
@@ -43,12 +43,10 @@
       @update-user="updateUser"
       :is-profile-modal-show="is_profile_modal_show"
       :user="user"
-
     />
 
   </v-app-bar>
 </template>
-
 
 <script>
   import UserProfileModal from './UserProfileModal'
