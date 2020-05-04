@@ -44,13 +44,11 @@
             <v-btn @click="login" small color="primary">ログイン</v-btn>
           </div>
         </v-card-actions>
-
       </v-card>
 
     </v-container>
   </v-content>
 </template>
-
 
 <script>
   export default {
