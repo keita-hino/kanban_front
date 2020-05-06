@@ -1,4 +1,4 @@
-# my-project
+# カンバンアプリ front [![Netlify Status](https://api.netlify.com/api/v1/badges/bcf60774-5e2f-403c-a5f2-680457f33807/deploy-status)](https://app.netlify.com/sites/serene-einstein-1caf18/deploys)
 
 ## Project setup
 ```
