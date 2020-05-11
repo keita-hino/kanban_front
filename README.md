@@ -1,4 +1,13 @@
-# my-project
+# カンバンアプリ front [![Netlify Status](https://api.netlify.com/api/v1/badges/bcf60774-5e2f-403c-a5f2-680457f33807/deploy-status)](https://app.netlify.com/sites/serene-einstein-1caf18/deploys)
+
+## front
+ライブラリ：Vue.js  
+環境：Netlify  
+
+## backend
+フレームワーク：Ruby on Rails  
+環境：Heroku  
+https://github.com/keita-hino/kanban_backend
 
 ## Project setup
 ```
