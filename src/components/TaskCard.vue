@@ -5,9 +5,9 @@
       <template v-if="is_task_text_hide">
         <!-- タスク追加用カード -->
         <v-card
-            class="mt-2"
-            width="330"
-          >
+          class="mt-2"
+          width="330"
+        >
           <v-card-text @click="is_task_text_hide = false" class="text-center" style="cursor: pointer">
             <v-icon class="mr-1 mb-1" color="blue lighten-2" size=15>add</v-icon>
             <span class="blue--text lighten-2--text subheading mr-2">タスク追加</span>
@@ -16,9 +16,9 @@
       </template>
       <template v-else>
         <v-card
-            class="mt-2"
-            width="330"
-          >
+          class="mt-2"
+          width="330"
+        >
           <v-card-text class="pb-0">
             <v-text-field
               v-model="task.name"
