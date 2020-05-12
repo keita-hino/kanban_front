@@ -34,7 +34,7 @@
           <v-spacer></v-spacer>
 
           <div class="my-2 pr-3">
-            <v-btn small @click="$emit('on-click-cansel')">キャンセル</v-btn>
+            <v-btn small @click="onClickCansel()">キャンセル</v-btn>
           </div>
 
           <div class="my-2 pr-2">
@@ -86,7 +86,7 @@
       // キャンセルボタンが押された時
       onClickCansel() {
         this.task = {};
-        this.$emit('on-click-cansel')
+        this.$emit('on-click-cancel')
       },
     }
   }
