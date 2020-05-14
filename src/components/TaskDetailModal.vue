@@ -102,6 +102,7 @@
         type: Object,
       }
     },
+
     data() {
       return {
         task: {},
