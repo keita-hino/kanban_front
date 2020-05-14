@@ -42,6 +42,7 @@
 <script>
   import draggable from 'vuedraggable'
   import CreateTaskCard from './CreateTaskCard'
+
   export default {
     props: {
       // レーン名
