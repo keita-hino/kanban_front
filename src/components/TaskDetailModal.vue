@@ -71,7 +71,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="$emit('on-click-task-detail-cancel')">キャンセル</v-btn>
-          <v-btn color="blue darken-1" text @click="onClickSave()" :disabled="isConserve()">保存</v-btn>
+          <v-btn class="save" color="blue darken-1" text @click="onClickSave()" :disabled="isConserve()">保存</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -80,6 +80,7 @@
 
 <script>
   export default {
+    name: 'TaskDetailModal',
     props: {
       // タスク表示/非表示
       isTaskDetailModalShow: {
