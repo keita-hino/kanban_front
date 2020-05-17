@@ -8,7 +8,7 @@ import TaskDetailModal from '@/components/TaskDetailModal.vue'
 Vue.use(Vuetify)
 const localVue = createLocalVue()
 
-describe('クリックイベント', () => {
+describe('TaskDetailModal', () => {
   let vuetify
 
   beforeEach(() => {
