@@ -49,6 +49,8 @@
 </template>
 
 <script>
+  import _ from 'lodash'
+
   import UserProfileModal from './UserProfileModal'
 
   export default {
@@ -101,7 +103,7 @@
       // プロファイル設定モーダルを開く
       onProfileModalOpen() {
         this.is_profile_modal_show = true;
-        this.user = JSON.parse(JSON.stringify(this.$store.state.auth));
+        this.user = _.cloneDeep(this.$store.state.auth)
       },
     },
   }

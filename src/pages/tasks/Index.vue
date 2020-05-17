@@ -38,8 +38,11 @@
 </template>
 
 <script>
+  import _ from 'lodash'
+
   import TaskCard from '../../components/TaskCard'
   import TaskDetailModal from '../../components/TaskDetailModal'
+
 
   export default {
     data() {
@@ -89,7 +92,7 @@
 
       // タスクの詳細設定用モーダルを開く
       onDetailModalOpen(task){
-        this.selectedTask = JSON.parse(JSON.stringify(task));
+        this.selectedTask = _.cloneDeep(task)
         this.task_status = status;
         this.is_task_detail_modal_show = true;
       },
