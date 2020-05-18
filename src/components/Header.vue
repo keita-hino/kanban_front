@@ -6,7 +6,9 @@
     app
   >
 
-    <v-toolbar-title>Task管理</v-toolbar-title>
+    <v-toolbar-title>
+      <v-img alt="Vue logo" src="../assets/logo.png"/>
+    </v-toolbar-title>
 
     <v-spacer></v-spacer>
 
