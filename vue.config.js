@@ -13,7 +13,7 @@ module.exports = {
             {
               loader: 'ts-loader',
               options: {
-                transpileOnly: true, /* コンパイルのみで型検査を行わない */
+                // transpileOnly: true, /* コンパイルのみで型検査を行わない */
                 appendTsSuffixTo: [/\.vue$/] /* .vueファイルをTSとして読み込むようにする */
               }
             }
